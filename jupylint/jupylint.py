@@ -5,66 +5,80 @@
 pylint on it for static analysis."""
 
 from argparse import ArgumentParser
-from os import system, remove
+from subprocess import check_output, CalledProcessError
 from json import load
+from os import remove
+
 
 class Jupylint:
     """The tool to extract from Jupyter notebooks and run pylint"""
     CELL_SEPARATOR = "# " + ("=" * 78) + "\n"
-    DEFAULT_IN_FILE = "Q1.ipynb"
     DEFAULT_OUT_FILE = "out.py"
 
     @staticmethod
-    def extract_content(content, out_file_name="out.py"):
-        """Extract the code blocks from the json and write it out to a file"""
-        with open(out_file_name, "w+", encoding='utf-8') as out_file:
-            for cell in content:
-                if cell["cell_type"] == "code":
-                    out_file.write(Jupylint.CELL_SEPARATOR)
-                    for line in cell["source"]:
-                        out_file.write(line)
-                    out_file.write("\n\n")
-
-    @staticmethod
-    def get_json_contents(in_file_name):
-        """Extract the json contents from the Jupyter file"""
-        content = ""
-        with open(in_file_name, "r", encoding='utf-8') as in_file:
-            content = load(in_file)
-
-        if content["nbformat"] >= 4:
-            return content["cells"]
-        return content["worksheets"][0]["cells"]
-
-    @staticmethod
-    def run():
-        """Run the tool, running pylint on the code within a specified Jupyter
-        notebook"""
-
-        # Parse keyword arguments
+    def get_arguments():
+        """Parse keyword arguments for the tool"""
         parser = ArgumentParser(description="""A simple tool to extract
         python code from a Jupyter notebook, and then run pylint on it for static
         analysis.""")
+        parser.add_argument("in_file_name", metavar="input_file_name", type=str,
+            nargs=1, help="the name of the Jupyter notebook file to extract the code from")
+        parser.add_argument("out_file_name", metavar="output_file_name", type=str,
+            nargs="?", default=Jupylint.DEFAULT_OUT_FILE,
+            help="the name of the output file to write the extracted code to")
+        parser.add_argument("-k", "--keep", dest="save_file", action="store_true",
+            help="a boolean specifying whether to keep or delete the extracted python file")
+        return parser.parse_args()
 
-        parser.add_argument('in_file_name', metavar='input file name', type=str,
-            nargs='?', default=Jupylint.DEFAULT_IN_FILE,
-            help='the name of the Jupyter notebook file to extract the code from')
-        parser.add_argument('out_file_name', metavar='output file name', type=str,
-            nargs='?', default=Jupylint.DEFAULT_OUT_FILE,
-            help='the name of the output file to write the extracted code to')
-        parser.add_argument('-k', '--keep', dest='save_file', action='store_false',
-            help='a boolean specifying whether to keep the extracted python file')
-        args = parser.parse_args()
-        print(args)
+    @staticmethod
+    def get_json_content(in_file_name):
+        """Extract the json contents from the Jupyter file"""
+        json_content = ""
+        with open(in_file_name, "r", encoding="utf-8") as in_file:
+            json_content = load(in_file)
+        if json_content["nbformat"] >= 4:
+            return json_content["cells"]
+        return json_content["worksheets"][0]["cells"]
 
-        # Call the extract and write out the code contents
-        json_contents = Jupylint.get_json_contents(args.in_file_name)
-        Jupylint.extract_content(json_contents)
+    @staticmethod
+    def get_code_content(json_content):
+        """Extract the code blocks from the json"""
+        code_content = ""
+        for cell in json_content:
+            if cell["cell_type"] == "code":
+                code_content += Jupylint.CELL_SEPARATOR
+                for line in cell["source"]:
+                    code_content += line
+                code_content += "\n\n"
+        return code_content
 
-        # Run pylint
-        system(f"pylint {args.out_file_name}")
+    @staticmethod
+    def execute(args):
+        """Call the chain of functions composing the tool given a set of
+        arguments, and return the output"""
+        # Run the internal functions
+        json_content = Jupylint.get_json_content(args.in_file_name[0])
+        code_content = Jupylint.get_code_content(json_content)
+        with open(args.out_file_name, "w+", encoding="utf-8") as out_file:
+            out_file.write(code_content)
+        # Use subprocess to run pylint. Catch error codes, as pylint sometimes
+        # exits with a non-zero value resulting in a runtime error on
+        # check_output and decode the message to a string, as the return type is
+        # a binary string
+        try:
+            return check_output(["pylint", args.out_file_name]).decode('unicode_escape')
+        except CalledProcessError as err:
+            return err.output.decode('unicode_escape')
 
-        # Clean up
+    @staticmethod
+    def run():
+        """Provide a simple function call to take user input through arguments
+        and print the results to standard output"""
+        # Get the arguments for the tool
+        args = Jupylint.get_arguments()
+        # Run the tool and display its output
+        print(Jupylint.execute(args))
+        # Clean up if required
         if not args.save_file:
             remove(args.out_file_name)
 
