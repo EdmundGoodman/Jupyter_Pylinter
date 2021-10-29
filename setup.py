@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name = 'jupyliny',
+    name = 'jupylint',
     version = '0.1.0',
     license='MIT',
-     description = 'A tool to run pylint on Jupyter notebooks',
+    description = 'A tool to run pylint on Jupyter notebooks',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author = 'Edmund Goodman',

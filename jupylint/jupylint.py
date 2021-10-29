@@ -6,8 +6,12 @@ pylint on it for static analysis."""
 
 from argparse import ArgumentParser
 from subprocess import check_output, CalledProcessError
-from json import load
-from os import remove
+from json import load, decoder
+from os import remove, path
+
+
+class OldJupyterVersionError(Exception):
+    """A custom exception for when the Jupyter version is too old"""
 
 
 class Jupylint:
@@ -38,7 +42,7 @@ class Jupylint:
             json_content = load(in_file)
         if json_content["nbformat"] >= 4:
             return json_content["cells"]
-        return json_content["worksheets"][0]["cells"]
+        raise OldJupyterVersionError(f"The Jupyter version of '{in_file_name}' is too old (<=4.0)")
 
     @staticmethod
     def get_code_content(json_content):
@@ -50,17 +54,23 @@ class Jupylint:
                 for line in cell["source"]:
                     code_content += line
                 code_content += "\n\n"
-        return code_content
+        # Drop the trailing new line
+        return code_content[:-1]
 
     @staticmethod
     def execute(args):
         """Call the chain of functions composing the tool given a set of
         arguments, and return the output"""
-        # Run the internal functions
-        json_content = Jupylint.get_json_content(args.in_file_name[0])
-        code_content = Jupylint.get_code_content(json_content)
+        # Run the internal functions, catching errors on invalid JSON files
+        try:
+            file_json_content = Jupylint.get_json_content(args.in_file_name[0])
+        except decoder.JSONDecodeError:
+            return "Malformed input file"
+        except OldJupyterVersionError as err:
+            return str(err)
+        file_code_content = Jupylint.get_code_content(file_json_content)
         with open(args.out_file_name, "w+", encoding="utf-8") as out_file:
-            out_file.write(code_content)
+            out_file.write(file_code_content)
         # Use subprocess to run pylint. Catch error codes, as pylint sometimes
         # exits with a non-zero value resulting in a runtime error on
         # check_output and decode the message to a string, as the return type is
@@ -79,7 +89,7 @@ class Jupylint:
         # Run the tool and display its output
         print(Jupylint.execute(args))
         # Clean up if required
-        if not args.save_file:
+        if not args.save_file and path.isfile(args.out_file_name):
             remove(args.out_file_name)
 
 

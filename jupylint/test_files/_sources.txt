@@ -1,0 +1,8 @@
+The testing notebooks are taken from the official Jupyter repository sample
+notebooks section here: https://github.com/jupyter/notebook/tree/master/docs/source/examples/Notebook,
+and a clone of these samples taken for old notebook versions, here: https://github.com/odewahn/ipynb-examples
+
+The downloaded notebook urls are:
+- https://raw.githubusercontent.com/jupyter/notebook/master/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb
+- https://raw.githubusercontent.com/jupyter/notebook/master/docs/source/examples/Notebook/Running%20Code.ipynb
+- https://raw.githubusercontent.com/odewahn/ipynb-examples/master/Part%201%20-%20Running%20Code.ipynb
