@@ -10,6 +10,16 @@ from json import load, decoder
 from os import remove, path
 
 
+__author__ = "Edmund Goodman"
+__copyright__ = "Copyright 2021"
+__credits__ = ["Edmund Goodman"]
+__license__ = "MIT"
+__version__ = "2.0.0"
+__maintainer__ = "Edmund Goodman"
+__email__ = "egoodman3141@gmail.com"
+__status__ = "Production"
+
+
 class OldJupyterVersionError(Exception):
     """A custom exception for when the Jupyter version is too old"""
 
@@ -100,3 +110,8 @@ class Jupylint:
 def main():
     """External run hook"""
     Jupylint.run()
+
+
+if __name__ == "__main__":
+    # If the file is run directly, run the main function
+    main()

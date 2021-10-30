@@ -1,0 +1,3 @@
+# Exclude the Jupyter notebook files used for testing from the GitHub language
+# breakdown
+*.ipynb linguist-detectable=false

@@ -9,6 +9,22 @@ Importing the module
     from jupylint import Jupylint
 
 
+Linting a file from the command line
+------------------------------------
+
+.. code-block:: bash
+
+    jupylint ./in.ipynb
+
+
+Getting help from the command line
+----------------------------------
+
+.. code-block:: bash
+
+    jupylint --help
+
+
 Linting a file from within python
 ---------------------------------
 
@@ -21,19 +37,3 @@ Linting a file from within python
     }
     result = Jupylint.execute(args)
     print(result)
-
-
-Linting a file from the command line
-------------------------------------
-
-.. code-block:: bash
-
-    python jupylint.py ./in.ipynb
-
-
-Getting help from the command line
-----------------------------------
-
-.. code-block:: bash
-
-    python jupylint.py --help

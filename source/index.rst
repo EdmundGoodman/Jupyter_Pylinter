@@ -7,12 +7,13 @@ Welcome to Jupylint's documentation!
 =====================================
 
 A simple tool to extract python code from a Jupyter notebook, and then run
-pylint on it for static analysis.
+:code:`pylint` on it for static analysis.
 
 Installation
 ------------
 
-The library package has been published on PyPi, so can be found here: https://pypi.org/project/jupylint/, and can be installed as follows:
+The library package has been published on PyPi, so can be found here:
+https://pypi.org/project/jupylint/, and can be installed as follows:
 
 .. code-block:: python
 
@@ -21,8 +22,8 @@ The library package has been published on PyPi, so can be found here: https://py
 Requirements
 ------------
 
-There are no additional required libraries
-
+The :code:`pylint` package is required, as :code:`jupylint` merely provides a
+wrapper around it for Jupyter notebooks.
 
 Contents
 --------
@@ -30,9 +31,9 @@ Contents
 .. toctree::
    :maxdepth: 2
 
-   autodoc
    project
    usage
+   autodoc
 
 
 Indices and tables

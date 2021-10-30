@@ -6,14 +6,26 @@
 A simple tool to extract python code from a Jupyter notebook, and then run
 pylint on it for static analysis.
 
+# Usage
+
+The package can be installed via PyPI, then run from the command line, as
+follows:
+
+```bash
+pip install jupylint
+jupylint <input file name>
+```
+
+Full documentation is available:
+
+- [On readthedocs](https://jupylint.readthedocs.io/en/latest/)
+
+# Download
+
 The tool can be downloaded in the following places:
 
 - [As a standalone python file](https://raw.githubusercontent.com/EdmundGoodman/Jupyter_Pylinter/main/jupylint/jupylint.py)
 - [As a package on PyPI](https://pypi.org/project/jupylint/)
-
-And has documentation available:
-
-- [On readthedocs](https://jupylint.readthedocs.io/en/latest/)
 
 ## Contributions and errata
 
