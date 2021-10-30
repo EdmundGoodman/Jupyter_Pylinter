@@ -1,0 +1,4 @@
+ignore:
+  - "jupylint/test_files/*"       # Don't test coverage on sample Jupyter notebooks
+  - "jupylint/_test_template.py"  # Don't test the test template file
+  - "setup.py"                    # Don't test the PyPI upload setup file
