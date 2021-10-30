@@ -64,7 +64,7 @@ class TestJupylint(unittest.TestCase):
         self.assertTrue("Your code has been rated at 10.00/10" in results)
 
     def test_ugly_code(self):
-        """Check that an ugle file is penalised"""
+        """Check that an ugly file is penalised"""
         args = {
             "in_file_name": ["./jupylint/test_files/running_code.ipynb"],
             "out_file_name": "./out.py",

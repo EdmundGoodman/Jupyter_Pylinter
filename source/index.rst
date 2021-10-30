@@ -12,7 +12,7 @@ A simple tool to extract python code from a Jupyter notebook, and then run
 Installation
 ------------
 
-The library package has been published on PyPi, so can be found here:
+The library package has been published on PyPI, so can be found here:
 https://pypi.org/project/jupylint/, and can be installed as follows:
 
 .. code-block:: python

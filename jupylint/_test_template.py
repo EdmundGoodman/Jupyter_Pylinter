@@ -32,7 +32,7 @@ class TestJupylint(unittest.TestCase):
         pass
 
     def test_ugly_code(self):
-        """Check that an ugle file is penalised"""
+        """Check that an ugly file is penalised"""
         pass
 
     def test_no_params(self):

@@ -6,6 +6,8 @@
 A simple tool to extract python code from a Jupyter notebook, and then run
 pylint on it for static analysis.
 
+If you find this tool useful, please give it a star on GitHub!
+
 # Usage
 
 The package can be installed via PyPI, then run from the command line, as
