@@ -16,3 +16,15 @@ Jupylint object
     :private-members:
     :special-members:
     :show-inheritance:
+
+
+Unit tests
+----------
+
+.. automodule:: _test_template
+
+.. autoclass:: TestJupylint
+    :members:
+    :private-members:
+    :special-members:
+    :show-inheritance:

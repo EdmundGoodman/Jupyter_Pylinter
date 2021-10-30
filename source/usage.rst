@@ -14,7 +14,6 @@ Linting a file from within python
 
 .. code-block:: python
 
-    """Set arguments, then call the linter"""
     args = {
         "in_file_name": ['./in.ipynb'],
         "out_file_name": './out.py',
@@ -26,6 +25,14 @@ Linting a file from within python
 
 Linting a file from the command line
 ------------------------------------
+
+.. code-block:: bash
+
+    python jupylint.py ./in.ipynb
+
+
+Getting help from the command line
+----------------------------------
 
 .. code-block:: bash
 

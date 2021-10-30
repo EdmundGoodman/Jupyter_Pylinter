@@ -52,7 +52,6 @@ class TestJupylint(unittest.TestCase):
             err_occurred = True
         self.assertTrue(err_occurred)
 
-
     def test_stylish_code(self):
         """Check that a perfectly stylish file is not penalised"""
         args = {
@@ -73,7 +72,6 @@ class TestJupylint(unittest.TestCase):
         results = Jupylint.execute(args)
         self.assertTrue("Your code has been rated at" in results)
         self.assertFalse("Your code has been rated at 10.00/10" in results)
-
 
     def test_no_params(self):
         """Check that running with no parameters fails"""
