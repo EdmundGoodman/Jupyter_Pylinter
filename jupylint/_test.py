@@ -124,8 +124,3 @@ def get_jupylint_output(command):
         return check_output(command, stderr=STDOUT).decode("unicode_escape")
     except CalledProcessError as err:
         return err.output.decode("unicode_escape")
-
-
-if __name__ == "__main__":
-    unittest.main()
-    print("All tests passed")
