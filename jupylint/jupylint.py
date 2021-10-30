@@ -97,5 +97,6 @@ class Jupylint:
             remove(args["out_file_name"])
 
 
-if __name__ == "__main__":
+def main():
+    """External run hook"""
     Jupylint.run()

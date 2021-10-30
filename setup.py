@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name = 'jupylint',
-    version = '1.0.1',
+    version = '1.1.0',
     license='MIT',
     description = 'A tool to run pylint on Jupyter notebooks',
     long_description=long_description,
@@ -14,8 +14,11 @@ setup(
     author = 'Edmund Goodman',
     author_email = 'egoodman3141@gmail.com',
     url = 'https://github.com/EdmundGoodman/Jupyter_Pylinter',
-    download_url = 'https://github.com/EdmundGoodman/Jupyter_Pylinter/archive/refs/tags/v1.0.1.tar.gz',
+    download_url = 'https://github.com/EdmundGoodman/Jupyter_Pylinter/archive/refs/tags/v1.1.0.tar.gz',
     packages=find_packages(),
+    entry_points = {
+        "console_scripts": ['jupylint = jupylint.jupylint:main']
+    },
     keywords = ['Jupyter', 'Pylint', 'linter'],
     install_requires = ['pylint'],
     classifiers=[

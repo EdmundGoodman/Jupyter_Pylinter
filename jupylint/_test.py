@@ -6,11 +6,10 @@ The testing framework for the Jupylint package
 """
 
 from subprocess import check_output, CalledProcessError, STDOUT
-from json.decoder import JSONDecodeError
 from os import path
 import unittest
 
-from .jupylint import Jupylint, OldJupyterVersionError
+from .jupylint import Jupylint
 
 
 class TestJupylint(unittest.TestCase):
