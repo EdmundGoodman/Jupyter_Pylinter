@@ -6,3 +6,9 @@ The downloaded notebook urls are:
 - https://raw.githubusercontent.com/jupyter/notebook/master/docs/source/examples/Notebook/Working%20With%20Markdown%20Cells.ipynb
 - https://raw.githubusercontent.com/jupyter/notebook/master/docs/source/examples/Notebook/Running%20Code.ipynb
 - https://raw.githubusercontent.com/odewahn/ipynb-examples/master/Part%201%20-%20Running%20Code.ipynb
+
+There are two custom notebooks:
+- `malformed.ipynb`, which is markdown cells with random sections deleted from
+  it to break the JSON
+- `stylish.ipynb`, which is a simple "FizzBuzz" program, written as the other
+  notebooks don't pass pylint 100% of the time

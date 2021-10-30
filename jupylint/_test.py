@@ -5,8 +5,9 @@
 Tests for the jupylint package
 """
 
-from subprocess import check_output, CalledProcessError
+from subprocess import check_output, CalledProcessError, STDOUT
 from json.decoder import JSONDecodeError
+from os import path
 import unittest
 
 from .jupylint import Jupylint, OldJupyterVersionError
@@ -81,20 +82,55 @@ class TestCard(unittest.TestCase):
         self.assertFalse("Your code has been rated at 10.00/10" in results)
 
 
-    def test_params_default(self):
-        pass
+    def test_no_params(self):
+        """Check that running with no parameters fails"""
+        result = self.get_jupylint_output(
+            "python3 ./jupylint/jupylint.py".split(" ")
+        )
+        self.assertTrue("error" in result)
 
     def test_params_input_file_valid(self):
-        pass
+        """Check that running with a valid input file works"""
+        result = self.get_jupylint_output(
+            "python3 ./jupylint/jupylint.py ./jupylint/test_files/stylish.ipynb".split(" ")
+        )
+        self.assertTrue("Your code has been rated" in result)
 
     def test_params_input_file_not_found(self):
-        pass
+        """Check that running with an invalid input file fails"""
+        result = self.get_jupylint_output(
+            "python3 ./jupylint/jupylint.py ./jupylint/test_files/non_existent_file.ipynb".split(" ")
+        )
+        self.assertEqual("Input file cannot be found\n", result)
 
     def test_params_output_file(self):
-        pass
+        """Check that running with a valid output file works"""
+        result = self.get_jupylint_output(
+            "python3 ./jupylint/jupylint.py ./jupylint/test_files/stylish.ipynb ./out.py".split(" ")
+        )
+        self.assertTrue("Your code has been rated" in result)
 
-    def test_keep_code_file(self):
-        pass
+    def test_keep_code_file_default(self):
+        """Check that running without the keep flag deletes the file"""
+        _ = self.get_jupylint_output(
+            "python3 ./jupylint/jupylint.py ./jupylint/test_files/stylish.ipynb ./out.py".split(" ")
+        )
+        self.assertFalse(path.isfile("./out.py"))
+
+    def test_keep_code_file_set(self):
+        """Check that running with the keep flag doesn't delete the file"""
+        _ = self.get_jupylint_output(
+            "python3 ./jupylint/jupylint.py ./jupylint/test_files/stylish.ipynb ./out.py --keep".split(" ")
+        )
+        self.assertTrue(path.isfile("./out.py"))
+
+    def get_jupylint_output(self, command):
+        """Run a command to get its output, abstracting away error handling"""
+        try:
+            return check_output(command, stderr=STDOUT).decode('unicode_escape')
+        except CalledProcessError as err:
+            return err.output.decode('unicode_escape')
+
 
 
 if __name__ == "__main__":

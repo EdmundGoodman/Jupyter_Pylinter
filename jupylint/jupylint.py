@@ -64,6 +64,8 @@ class Jupylint:
         # Run the internal functions, catching errors on invalid JSON files
         try:
             file_json_content = Jupylint.get_json_content(args.in_file_name[0])
+        except FileNotFoundError:
+            return "Input file cannot be found"
         except decoder.JSONDecodeError:
             return "Malformed input file"
         except OldJupyterVersionError as err:
