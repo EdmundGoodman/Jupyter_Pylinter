@@ -1,4 +1,5 @@
 ![Build status](https://github.com/EdmundGoodman/Jupyter_Pylinter/actions/workflows/python-app.yml/badge.svg)
+[![Code coverage](https://codecov.io/gh/EdmundGoodman/Jupyter_Pylinter/branch/main/graph/badge.svg?token=5XL3ZX71OJ)](https://codecov.io/gh/EdmundGoodman/Jupyter_Pylinter)
 
 # Jupyter Pylinter
 

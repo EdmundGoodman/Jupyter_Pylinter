@@ -36,21 +36,23 @@ class TestJupylint(unittest.TestCase):
 
     def test_file_old_format(self):
         """Check that old Jupyter formats are rejected"""
-        err_occurred = False
-        try:
-            _ = Jupylint.get_json_content("./jupylint/test_files/running_code_old.ipynb")
-        except OldJupyterVersionError:
-            err_occurred = True
-        self.assertTrue(err_occurred)
+        args = {
+            "in_file_name": ["./jupylint/test_files/running_code_old.ipynb"],
+            "out_file_name": "./out.py",
+            "save_file": False
+        }
+        results = Jupylint.execute(args)
+        self.assertTrue("too old (<=4.0)" in results)
 
     def test_file_malformed(self):
         """Check that a malformed input file is correctly identified"""
-        err_occurred = False
-        try:
-            _ = Jupylint.get_json_content("./jupylint/test_files/malformed.ipynb")
-        except JSONDecodeError:
-            err_occurred = True
-        self.assertTrue(err_occurred)
+        args = {
+            "in_file_name": ["./jupylint/test_files/malformed.ipynb"],
+            "out_file_name": "./out.py",
+            "save_file": False
+        }
+        results = Jupylint.execute(args)
+        self.assertEqual("Malformed input file", results)
 
     def test_stylish_code(self):
         """Check that a perfectly stylish file is not penalised"""
