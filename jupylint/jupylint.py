@@ -63,36 +63,38 @@ class Jupylint:
         arguments, and return the output"""
         # Run the internal functions, catching errors on invalid JSON files
         try:
-            file_json_content = Jupylint.get_json_content(args.in_file_name[0])
+            file_json_content = Jupylint.get_json_content(args["in_file_name"][0])
         except FileNotFoundError:
             return "Input file cannot be found"
         except decoder.JSONDecodeError:
             return "Malformed input file"
         except OldJupyterVersionError as err:
             return str(err)
+
         file_code_content = Jupylint.get_code_content(file_json_content)
-        with open(args.out_file_name, "w+", encoding="utf-8") as out_file:
+        with open(args["out_file_name"], "w+", encoding="utf-8") as out_file:
             out_file.write(file_code_content)
         # Use subprocess to run pylint. Catch error codes, as pylint sometimes
         # exits with a non-zero value resulting in a runtime error on
         # check_output and decode the message to a string, as the return type is
         # a binary string
         try:
-            return check_output(["pylint", args.out_file_name]).decode('unicode_escape')
+            return check_output(["pylint", args["out_file_name"]]).decode("unicode_escape")
         except CalledProcessError as err:
-            return err.output.decode('unicode_escape')
+            return err.output.decode("unicode_escape")
 
     @staticmethod
     def run():
         """Provide a simple function call to take user input through arguments
         and print the results to standard output"""
         # Get the arguments for the tool
-        args = Jupylint.get_arguments()
+        args = vars(Jupylint.get_arguments())
+
         # Run the tool and display its output
         print(Jupylint.execute(args))
         # Clean up if required
-        if not args.save_file and path.isfile(args.out_file_name):
-            remove(args.out_file_name)
+        if not args["save_file"] and path.isfile(args["out_file_name"]):
+            remove(args["out_file_name"])
 
 
 if __name__ == "__main__":
