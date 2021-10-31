@@ -37,7 +37,7 @@ class TestJupylint(unittest.TestCase):
         """Check that old Jupyter formats are rejected"""
         args = {
             "in_file_name": ["./jupylint/test_files/running_code_old.ipynb"],
-            "out_file_name": "./out.py",
+            "out_file_name": "./jupylint_tmp_out.py",
             "save_file": False
         }
         results = Jupylint.execute(args)
@@ -47,7 +47,7 @@ class TestJupylint(unittest.TestCase):
         """Check that a malformed input file is correctly identified"""
         args = {
             "in_file_name": ["./jupylint/test_files/malformed.ipynb"],
-            "out_file_name": "./out.py",
+            "out_file_name": "./jupylint_tmp_out.py",
             "save_file": False
         }
         results = Jupylint.execute(args)
@@ -57,7 +57,7 @@ class TestJupylint(unittest.TestCase):
         """Check that a perfectly stylish file is not penalised"""
         args = {
             "in_file_name": ["./jupylint/test_files/stylish.ipynb"],
-            "out_file_name": "./out.py",
+            "out_file_name": "./jupylint_tmp_out.py",
             "save_file": False
         }
         results = Jupylint.execute(args)
@@ -67,7 +67,7 @@ class TestJupylint(unittest.TestCase):
         """Check that an ugly file is penalised"""
         args = {
             "in_file_name": ["./jupylint/test_files/running_code.ipynb"],
-            "out_file_name": "./out.py",
+            "out_file_name": "./jupylint_tmp_out.py",
             "save_file": False
         }
         results = Jupylint.execute(args)
@@ -96,25 +96,27 @@ class TestJupylint(unittest.TestCase):
         self.assertEqual("Input file cannot be found\n", result)
 
     def test_params_output_file(self):
-        """Check that running with a valid output file works"""
+        """Check that running with a valid output file works, and changes the
+        output file location"""
         result = get_jupylint_output(
-            "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb ./out.py".split(" ")
+            "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb ./jupylint_test_out.py --keep".split(" ")
         )
+        self.assertTrue(path.isfile("./jupylint_test_out.py"))
         self.assertTrue("Your code has been rated" in result)
 
     def test_keep_code_file_default(self):
         """Check that running without the keep flag deletes the file"""
         _ = get_jupylint_output(
-            "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb ./out.py".split(" ")
+            "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb ./jupylint_tmp_out.py".split(" ")
         )
-        self.assertFalse(path.isfile("./out.py"))
+        self.assertFalse(path.isfile("./jupylint_tmp_out.py"))
 
     def test_keep_code_file_set(self):
         """Check that running with the keep flag doesn"t delete the file"""
         _ = get_jupylint_output(
-            "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb ./out.py --keep".split(" ")
+            "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb ./jupylint_tmp_out.py --keep".split(" ")
         )
-        self.assertTrue(path.isfile("./out.py"))
+        self.assertTrue(path.isfile("./jupylint_tmp_out.py"))
 
     def test_no_pylintrc_inclusion(self):
         """Check that not specifying a pylintrc file won't use one"""
@@ -140,8 +142,10 @@ class TestJupylint(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """Clean up, removing any output files left around"""
-        if path.isfile("./out.py"):
-            remove("./out.py")
+        if path.isfile("./jupylint_tmp_out.py"):
+            remove("./jupylint_tmp_out.py")
+        if path.isfile("./jupylint_test_out.py"):
+            remove("./jupylint_test_out.py")
 
 
 def get_jupylint_output(command):

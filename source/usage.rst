@@ -43,7 +43,7 @@ Linting a file from within python
     # location of a pylintrc file to use
     args = {
         "in_file_name": ['./in.ipynb'],
-        "out_file_name": './out.py',
+        "out_file_name": './jupylint_tmp_out.py',
         "save_file": True
     }
     result = Jupylint.execute(args)

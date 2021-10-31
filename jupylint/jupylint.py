@@ -14,7 +14,7 @@ __author__ = "Edmund Goodman"
 __copyright__ = "Copyright 2021"
 __credits__ = ["Edmund Goodman"]
 __license__ = "MIT"
-__version__ = "2.1.0"
+__version__ = "2.1.1"
 __maintainer__ = "Edmund Goodman"
 __email__ = "egoodman3141@gmail.com"
 __status__ = "Production"
@@ -27,7 +27,7 @@ class OldJupyterVersionError(Exception):
 class Jupylint:
     """The tool to extract from Jupyter notebooks and run pylint"""
     CELL_SEPARATOR = "# " + ("=" * 78) + "\n"
-    DEFAULT_OUT_FILE = "out.py"
+    DEFAULT_OUT_FILE = "jupylint_tmp_out.py"
 
     @staticmethod
     def get_arguments():
