@@ -14,7 +14,7 @@ __author__ = "Edmund Goodman"
 __copyright__ = "Copyright 2021"
 __credits__ = ["Edmund Goodman"]
 __license__ = "MIT"
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 __maintainer__ = "Edmund Goodman"
 __email__ = "egoodman3141@gmail.com"
 __status__ = "Production"
@@ -42,6 +42,10 @@ class Jupylint:
             help="the name of the output file to write the extracted code to")
         parser.add_argument("-k", "--keep", dest="save_file", action="store_true",
             help="a boolean specifying whether to keep or delete the extracted python file")
+        parser.add_argument("--rcfile", metavar="rcfile", type=str,
+            nargs=1, help="the pylintrc file to use")
+        parser.add_argument("-v", "--version", action="version",
+            version=f"%(prog)s {__version__}")
         return parser.parse_args()
 
     @staticmethod
@@ -80,16 +84,20 @@ class Jupylint:
             return "Malformed input file"
         except OldJupyterVersionError as err:
             return str(err)
-
         file_code_content = Jupylint.get_code_content(file_json_content)
+        # Write out to the file
         with open(args["out_file_name"], "w+", encoding="utf-8") as out_file:
             out_file.write(file_code_content)
+        # Build the pylint command to run, specifying the rcfile if necessary
+        command = ["pylint", args["out_file_name"]]
+        if "rcfile" in args.keys() and args["rcfile"] is not None:
+            command.extend(["--rcfile", args["rcfile"][0]])
         # Use subprocess to run pylint. Catch error codes, as pylint sometimes
         # exits with a non-zero value resulting in a runtime error on
         # check_output and decode the message to a string, as the return type is
         # a binary string
         try:
-            return check_output(["pylint", args["out_file_name"]]).decode("unicode_escape")
+            return check_output(command).decode("unicode_escape")
         except CalledProcessError as err:
             return err.output.decode("unicode_escape")
 

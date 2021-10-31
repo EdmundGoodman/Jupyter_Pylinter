@@ -2,4 +2,5 @@ ignore:
   - "jupylint/test_files/*"       # Don't test coverage on sample Jupyter notebooks
   - "jupylint/_test_template.py"  # Don't test the test template file
   - "jupylint/__main__.py"        # Don't test the __main__ packaging method
+  - "source/*"                    # Don't test the Sphinx documentation builder code
   - "setup.py"                    # Don't test the PyPI upload setup file

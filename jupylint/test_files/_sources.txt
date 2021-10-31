@@ -12,3 +12,7 @@ There are two custom notebooks:
   it to break the JSON
 - `stylish.ipynb`, which is a simple "FizzBuzz" program, written as the other
   notebooks don't pass pylint 100% of the time
+
+
+
+There is also an included pylintrc file for testing settings file inclusion

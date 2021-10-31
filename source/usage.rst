@@ -25,11 +25,22 @@ Getting help from the command line
     jupylint --help
 
 
+Getting help from the command line
+----------------------------------
+
+.. code-block:: bash
+
+    jupylint --help
+
+
 Linting a file from within python
 ---------------------------------
 
 .. code-block:: python
 
+    # All three dictionary keys below are required, but there is
+    # an additional optional one "rcfile", which specifies the
+    # location of a pylintrc file to use
     args = {
         "in_file_name": ['./in.ipynb'],
         "out_file_name": './out.py',

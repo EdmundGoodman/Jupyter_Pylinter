@@ -116,6 +116,27 @@ class TestJupylint(unittest.TestCase):
         )
         self.assertTrue(path.isfile("./out.py"))
 
+    def test_no_pylintrc_inclusion(self):
+        """Check that not specifying a pylintrc file won't use one"""
+        result = get_jupylint_output(
+            "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb".split(" ")
+        )
+        self.assertTrue("Report\n======" not in result)
+
+    def test_pylintrc_inclusion(self):
+        """Check that using a pylintrc file will change the output style"""
+        result = get_jupylint_output(
+            "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb --rcfile ./jupylint/test_files/hidden_pylintrc".split(" ")
+        )
+        self.assertTrue("Report\n======" in result)
+
+    def test_pylintrc_not_found(self):
+        """Check that using a pylintrc file with """
+        result = get_jupylint_output(
+            "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb --rcfile ./jupylint/test_files/no_pylintrc".split(" ")
+        )
+        self.assertEqual("The config file ./jupylint/test_files/no_pylintrc doesn't exist!\n\n", result)
+
     @classmethod
     def tearDownClass(cls):
         """Clean up, removing any output files left around"""
