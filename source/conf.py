@@ -22,7 +22,7 @@ copyright = '2021, Edmund Goodman'
 author = 'Edmund Goodman'
 
 # The full version, including alpha/beta/rc tags
-release = '2.1.1'
+release = '2.2.1'
 
 
 # -- General configuration ---------------------------------------------------

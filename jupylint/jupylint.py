@@ -14,7 +14,7 @@ __author__ = "Edmund Goodman"
 __copyright__ = "Copyright 2021"
 __credits__ = ["Edmund Goodman"]
 __license__ = "MIT"
-__version__ = "2.1.1"
+__version__ = "2.2.1"
 __maintainer__ = "Edmund Goodman"
 __email__ = "egoodman3141@gmail.com"
 __status__ = "Production"
@@ -27,7 +27,7 @@ class OldJupyterVersionError(Exception):
 class Jupylint:
     """The tool to extract from Jupyter notebooks and run pylint"""
     CELL_SEPARATOR = "# " + ("=" * 78) + "\n"
-    DEFAULT_OUT_FILE = "jupylint_tmp_out.py"
+    DEFAULT_OUT_FILE = ".jupylint_tmp_out.py"
 
     @staticmethod
     def get_arguments():
@@ -97,7 +97,7 @@ class Jupylint:
         # check_output and decode the message to a string, as the return type is
         # a binary string
         try:
-            return check_output(command).decode("unicode_escape")
+            return check_output(" ".join(command), shell=True).decode("unicode_escape")
         except CalledProcessError as err:
             return err.output.decode("unicode_escape")
 
