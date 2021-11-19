@@ -7,7 +7,6 @@ Interface
 
 .. automodule:: jupylint
 
-
 Jupylint object
 ---------------
 
@@ -16,6 +15,8 @@ Jupylint object
     :private-members:
     :special-members:
     :show-inheritance:
+
+.. autofunction:: main
 
 
 Unit tests
@@ -28,3 +29,5 @@ Unit tests
     :private-members:
     :special-members:
     :show-inheritance:
+
+.. autofunction:: get_jupylint_output

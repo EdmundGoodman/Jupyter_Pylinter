@@ -112,7 +112,7 @@ class TestJupylint(unittest.TestCase):
         self.assertFalse(path.isfile("./.jupylint_tmp_out.py"))
 
     def test_keep_code_file_set(self):
-        """Check that running with the keep flag doesn"t delete the file"""
+        """Check that running with the keep flag doesn't delete the file"""
         _ = get_jupylint_output(
             "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb ./.jupylint_tmp_out.py --keep".split(" ")
         )
@@ -133,7 +133,7 @@ class TestJupylint(unittest.TestCase):
         self.assertTrue("Report\n======" in result)
 
     def test_pylintrc_not_found(self):
-        """Check that using a pylintrc file with """
+        """Check that using a non-existent pylintrc file will fail"""
         result = get_jupylint_output(
             "python3 ./jupylint_runner.py ./jupylint/test_files/stylish.ipynb --rcfile ./jupylint/test_files/no_pylintrc".split(" ")
         )

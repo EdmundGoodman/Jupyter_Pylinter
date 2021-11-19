@@ -56,9 +56,20 @@ class TestJupylint(unittest.TestCase):
         pass
 
     def test_keep_code_file_set(self):
-        """Check that running with the keep flag doesn"t delete the file"""
+        """Check that running with the keep flag doesn't delete the file"""
         pass
 
+    def test_no_pylintrc_inclusion(self):
+        """Check that not specifying a pylintrc file won't use one"""
+        pass
+
+    def test_pylintrc_inclusion(self):
+        """Check that using a pylintrc file will change the output style"""
+        pass
+
+    def test_pylintrc_not_found(self):
+        """Check that using a non-existent pylintrc file will fail"""
+        pass
 
 def get_jupylint_output(command):
     """Run a command to get its output, abstracting away error handling"""

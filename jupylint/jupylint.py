@@ -14,7 +14,7 @@ __author__ = "Edmund Goodman"
 __copyright__ = "Copyright 2021"
 __credits__ = ["Edmund Goodman"]
 __license__ = "MIT"
-__version__ = "2.2.1"
+__version__ = "2.2.2"
 __maintainer__ = "Edmund Goodman"
 __email__ = "egoodman3141@gmail.com"
 __status__ = "Production"
@@ -116,7 +116,7 @@ class Jupylint:
 
 
 def main():
-    """External run hook"""
+    """External run hook for more convenient interfacing within python"""
     Jupylint.run()
 
 
