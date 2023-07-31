@@ -1,7 +1,11 @@
 ![Build status](https://github.com/EdmundGoodman/Jupyter_Pylinter/actions/workflows/python-app.yml/badge.svg)
 [![Code coverage](https://codecov.io/gh/EdmundGoodman/Jupyter_Pylinter/branch/main/graph/badge.svg?token=5XL3ZX71OJ)](https://codecov.io/gh/EdmundGoodman/Jupyter_Pylinter)
 
-# Jupyter Pylinter
+# Jupyter Pylinter - Archived
+
+***This project is archived, and no longer under active development.***
+
+**Please consider using [https://github.com/nbQA-dev/nbQA](https://github.com/nbQA-dev/nbQA) instead**
 
 A simple tool to extract python code from a Jupyter notebook, and then run
 pylint on it for static analysis.

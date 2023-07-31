@@ -14,7 +14,7 @@ __author__ = "Edmund Goodman"
 __copyright__ = "Copyright 2021"
 __credits__ = ["Edmund Goodman"]
 __license__ = "MIT"
-__version__ = "2.2.2"
+__version__ = "2.2.3"
 __maintainer__ = "Edmund Goodman"
 __email__ = "egoodman3141@gmail.com"
 __status__ = "Production"
@@ -26,26 +26,50 @@ class OldJupyterVersionError(Exception):
 
 class Jupylint:
     """The tool to extract from Jupyter notebooks and run pylint"""
+
     CELL_SEPARATOR = "# " + ("=" * 78) + "\n"
     DEFAULT_OUT_FILE = ".jupylint_tmp_out.py"
 
     @staticmethod
     def get_arguments():
         """Parse keyword arguments for the tool"""
-        parser = ArgumentParser(description="""A simple tool to extract
+        parser = ArgumentParser(
+            description="""A simple tool to extract
         python code from a Jupyter notebook, and then run pylint on it for static
-        analysis.""")
-        parser.add_argument("in_file_name", metavar="input_file_name", type=str,
-            nargs=1, help="the name of the Jupyter notebook file to extract the code from")
-        parser.add_argument("out_file_name", metavar="output_file_name", type=str,
-            nargs="?", default=Jupylint.DEFAULT_OUT_FILE,
-            help="the name of the output file to write the extracted code to")
-        parser.add_argument("-k", "--keep", dest="save_file", action="store_true",
-            help="a boolean specifying whether to keep or delete the extracted python file")
-        parser.add_argument("--rcfile", metavar="rcfile", type=str,
-            nargs=1, help="the pylintrc file to use")
-        parser.add_argument("-v", "--version", action="version",
-            version=f"%(prog)s {__version__}")
+        analysis."""
+        )
+        parser.add_argument(
+            "in_file_name",
+            metavar="input_file_name",
+            type=str,
+            nargs=1,
+            help="the name of the Jupyter notebook file to extract the code from",
+        )
+        parser.add_argument(
+            "out_file_name",
+            metavar="output_file_name",
+            type=str,
+            nargs="?",
+            default=Jupylint.DEFAULT_OUT_FILE,
+            help="the name of the output file to write the extracted code to",
+        )
+        parser.add_argument(
+            "-k",
+            "--keep",
+            dest="save_file",
+            action="store_true",
+            help="a boolean specifying whether to keep or delete the extracted python file",
+        )
+        parser.add_argument(
+            "--rcfile",
+            metavar="rcfile",
+            type=str,
+            nargs=1,
+            help="the pylintrc file to use",
+        )
+        parser.add_argument(
+            "-v", "--version", action="version", version=f"%(prog)s {__version__}"
+        )
         return parser.parse_args()
 
     @staticmethod
@@ -56,7 +80,9 @@ class Jupylint:
             json_content = load(in_file)
         if json_content["nbformat"] >= 4:
             return json_content["cells"]
-        raise OldJupyterVersionError(f"The Jupyter version of '{in_file_name}' is too old (<=4.0)")
+        raise OldJupyterVersionError(
+            f"The Jupyter version of '{in_file_name}' is too old (<=4.0)"
+        )
 
     @staticmethod
     def get_code_content(json_content):
