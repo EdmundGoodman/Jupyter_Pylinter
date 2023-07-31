@@ -18,11 +18,11 @@ sys.path.insert(0, os.path.abspath('../jupylint'))
 # -- Project information -----------------------------------------------------
 
 project = 'Jupylint'
-copyright = '2021, Edmund Goodman'
+copyright = '2023, Edmund Goodman'
 author = 'Edmund Goodman'
 
 # The full version, including alpha/beta/rc tags
-release = '2.2.2'
+release = '2.2.4'
 
 
 # -- General configuration ---------------------------------------------------

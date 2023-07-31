@@ -6,6 +6,10 @@
 Welcome to Jupylint's documentation!
 =====================================
 
+**This project is archived, and no longer under active development.**
+
+*Please consider using [https://github.com/nbQA-dev/nbQA](https://github.com/nbQA-dev/nbQA) instead*
+
 A simple tool to extract python code from a Jupyter notebook, and then run
 :code:`pylint` on it for static analysis.
 
